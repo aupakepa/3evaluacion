@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
 import utilidades.Leer;
 
@@ -52,11 +52,11 @@ public class Main {
 
 		ArrayList<Cliente> fila;
 		int contador = 0;
-		while (contador < 300) {
+		while (contador < 299) {
 
-			if (contador==0) {//he creado el primer ciente en todas las colas por si acaso
+			if (contador == 0) {// he creado el primer ciente en todas las colas por si acaso
 				for (int i = 0; i < colas.size(); i++) {
-				colas.get(i).add(crearCliente(colas));	
+					colas.get(i).add(crearCliente(colas));
 				}
 			}
 			if (contador % 5 == 0) {
@@ -65,17 +65,22 @@ public class Main {
 			}
 			for (int i = 0; i < 5; i++) {
 				fila = colas.get(i);
-				if (fila.get(0).terminado()) {
-					fila.remove(0);
-				}			
+				Iterator it = fila.iterator();
+				while (it.hasNext()) {
+					Cliente cliente = (Cliente) it.next();
+					if (cliente.terminado()) {
+						it.remove();
+					}
+				}
+
 			}
 			for (int i = 0; i < 5; i++) {
 				fila = colas.get(i);
-				if (!fila.get(0).equals(null)) {
+				if (!fila.isEmpty()) {
 					fila.get(0).atencion();
+
 				}
-				}			
-			
+			}
 			contador++;
 		}
 
@@ -90,11 +95,11 @@ public class Main {
 		Cliente cliente = null;
 		int tipo = (int) (Math.random() * 101);
 		if (tipo > 86) {
-			cliente = new Cliente(20, colaMenor(colas));
+			cliente = new Cliente(60, colaMenor(colas));
 		} else if (tipo < 86 && tipo > 60) {
-			cliente = new Cliente(10, colaMenor(colas));
+			cliente = new Cliente(30, colaMenor(colas));
 		} else {
-			cliente = new Cliente(5, colaMenor(colas));
+			cliente = new Cliente(15, colaMenor(colas));
 		}
 		return cliente;
 	}
