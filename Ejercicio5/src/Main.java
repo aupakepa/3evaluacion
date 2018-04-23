@@ -53,34 +53,9 @@ public class Main {
 		ArrayList<Cliente> fila;
 		int contador = 0;
 		while (contador < 299) {
-
-			if (contador == 0) {// he creado el primer ciente en todas las colas por si acaso
-				for (int i = 0; i < colas.size(); i++) {
-					colas.get(i).add(crearCliente(colas));
-				}
-			}
-			if (contador % 5 == 0) {
-				colas.get(colaMenor(colas)).add(crearCliente(colas));
-
-			}
-			for (int i = 0; i < 5; i++) {
-				fila = colas.get(i);
-				Iterator it = fila.iterator();
-				while (it.hasNext()) {
-					Cliente cliente = (Cliente) it.next();
-					if (cliente.terminado()) {
-						it.remove();
-					}
-				}
-
-			}
-			for (int i = 0; i < 5; i++) {
-				fila = colas.get(i);
-				if (!fila.isEmpty()) {
-					fila.get(0).atencion();
-
-				}
-			}
+			insertarTarea(colas, contador);
+			extraerTarea(colas);
+			servirColas(colas);
 			contador++;
 		}
 
@@ -91,20 +66,53 @@ public class Main {
 		}
 	}
 
+	private static void servirColas(ArrayList<ArrayList<Cliente>> colas) {
+		ArrayList<Cliente> fila;
+		for (int i = 0; i < 5; i++) {
+			fila = colas.get(i);
+			if (!fila.isEmpty()) {
+				fila.get(0).atencion();
+
+			}
+		}
+	}
+
+	private static void insertarTarea(ArrayList<ArrayList<Cliente>> colas, int contador) {
+		if (contador % 5 == 0) {
+			colas.get(asignarCola(colas)).add(crearCliente(colas));
+
+		}
+	}
+
+	private static void extraerTarea(ArrayList<ArrayList<Cliente>> colas) {
+		ArrayList<Cliente> fila;
+		for (int i = 0; i < 5; i++) {
+			fila = colas.get(i);
+			Iterator<Cliente> it = fila.iterator();
+			while (it.hasNext()) {
+				Cliente cliente = it.next();
+				if (cliente.terminado()) {
+					it.remove();
+				}
+			}
+
+		}
+	}
+
 	private static Cliente crearCliente(ArrayList<ArrayList<Cliente>> colas) {
 		Cliente cliente = null;
 		int tipo = (int) (Math.random() * 101);
 		if (tipo > 86) {
-			cliente = new Cliente(60, colaMenor(colas));
+			cliente = new Cliente(60, asignarCola(colas));
 		} else if (tipo < 86 && tipo > 60) {
-			cliente = new Cliente(30, colaMenor(colas));
+			cliente = new Cliente(30, asignarCola(colas));
 		} else {
-			cliente = new Cliente(15, colaMenor(colas));
+			cliente = new Cliente(15, asignarCola(colas));
 		}
 		return cliente;
 	}
 
-	private static Integer colaMenor(ArrayList<ArrayList<Cliente>> colas) {
+	private static Integer asignarCola(ArrayList<ArrayList<Cliente>> colas) {
 		Integer menor = 0;
 		int contador = 0;
 		int longitud = (colas.get(0)).size();
