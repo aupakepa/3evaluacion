@@ -50,12 +50,12 @@ public class Main {
 			colas.add(new ArrayList<Cliente>());
 		}
 
-		ArrayList<Cliente> fila;
 		int contador = 0;
-		while (contador < 299) {
+		while (contador < 300) {
 			insertarTarea(colas, contador);
-			extraerTarea(colas);
 			servirColas(colas);
+			extraerTarea(colas);
+
 			contador++;
 		}
 
@@ -78,7 +78,7 @@ public class Main {
 	}
 
 	private static void insertarTarea(ArrayList<ArrayList<Cliente>> colas, int contador) {
-		if (contador % 5 == 0) {
+		if (contador % 3 == 0) {
 			colas.get(asignarCola(colas)).add(crearCliente(colas));
 
 		}
@@ -103,11 +103,11 @@ public class Main {
 		Cliente cliente = null;
 		int tipo = (int) (Math.random() * 101);
 		if (tipo > 86) {
-			cliente = new Cliente(60, asignarCola(colas));
-		} else if (tipo < 86 && tipo > 60) {
 			cliente = new Cliente(30, asignarCola(colas));
+		} else if (tipo < 86 && tipo > 60) {
+			cliente = new Cliente(20, asignarCola(colas));
 		} else {
-			cliente = new Cliente(15, asignarCola(colas));
+			cliente = new Cliente(10, asignarCola(colas));
 		}
 		return cliente;
 	}
