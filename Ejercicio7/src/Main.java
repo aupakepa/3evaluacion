@@ -39,27 +39,22 @@ public class Main {
 		for (Entry<Fecha, Tren> tren : trenes.entrySet()) {
 			Leer.mostrarEnPantalla(tren.getKey() + tren.getValue().toString());
 		}
-		ArrayList <Billete> billetes = new ArrayList<Billete>();
+		ArrayList<Billete> billetes = new ArrayList<Billete>();
 		for (int i = 0; i < 100; i++) {
-			Iterator it = trenes.keySet().iterator();
-			int trenazar = (int) Math.random() * trenes.size();
-			for (int j = 0; j < trenazar-1; j++) {
-				it.next();
+			Iterator<Fecha> it = trenes.keySet().iterator();
+			int trenazar = (int) (Math.random() * trenes.size());
+			Fecha fecha = it.next();
+			for (int j = 0; j < trenazar - 1; j++) {
+				fecha = it.next();
 			}
-			 Fecha e=it.next();
-
-		// soy incapaz de sacar la clave de un mapa o no se usar los iteradores
-			billetes.add(new Billete((Fecha)it, trenes.get(it).getVagones().get(trenes.get(it).getVagones().size()).getNum(), trenes.get(it), (trenes.get(it).getVagones().get(trenes.get(it).getVagones().size()).getProximoasiento())-1));
-			
-			Fecha fecha;
-			Iterator  iter = trenes.entrySet().iterator();
-			while (iter.hasNext()) {
-				 iter.next();
-				
-			}
-			
-		
-			
+			Tren tren = trenes.get(fecha);
+			Vagon vagon = tren.getVagones().get(tren.getVagones().size() - 1);
+			tren.venderBillete();
+			Integer asiento = vagon.getAsientos()[vagon.getProximoasiento()-1];
+			billetes.add(new Billete(fecha, vagon.getNum(), tren, asiento));
+		}
+		for (Billete billete : billetes) {
+			Leer.mostrarEnPantalla(billete.toString());
 		}
 	}
 }

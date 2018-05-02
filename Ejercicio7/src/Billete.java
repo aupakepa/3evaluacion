@@ -8,49 +8,58 @@ o	fecha, tren, vagón y asiento: (este puede salir del mapa con clave la fecha y 
 o	tren, fecha, vagón : asientos vendidos (de billetes)*/
 public class Billete {
 	private Integer numBillete;
-	static Integer siguiente=1;
-private Fecha fecha;
-private Integer vagon;
-private Tren tren;
-private Integer asiento;
-public Fecha getFecha() {
-	return fecha;
-}
-public void setFecha(Fecha fecha) {
-	this.fecha = fecha;
-}
-public Integer getVagon() {
-	return vagon;
-}
-public void setVagon(Integer vagon) {
-	this.vagon = vagon;
-}
-public Tren getTren() {
-	return tren;
-}
-public void setTren(Tren tren) {
-	this.tren = tren;
-}
-public Integer getAsiento() {
-	return asiento;
-}
-public void setAsiento(Integer asiento) {
-	this.asiento = asiento;
-}
-@Override
-public String toString() {
-	return "Billete [numBillete=" + numBillete + ", fecha=" + fecha + ", vagon=" + vagon + ", tren=" + tren
-			+ ", asiento=" + asiento + "]";
-}
+	static Integer siguiente = 1;
+	private Fecha fecha;
+	private Integer vagon;
+	private Tren tren;
+	private Integer asiento;
 
-public Billete(Fecha fecha, Integer vagon, Tren tren, Integer asiento) {
-	super();
-	this.fecha = fecha;
-	this.vagon = vagon;
-	this.tren = tren;
-	this.asiento = asiento;
-	this.numBillete=siguiente;
-	siguiente++;
-}
+	public Fecha getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Fecha fecha) {
+		this.fecha = fecha;
+	}
+
+	public Integer getVagon() {
+		return vagon;
+	}
+
+	public void setVagon(Integer vagon) {
+		this.vagon = vagon;
+	}
+
+	public Tren getTren() {
+		return tren;
+	}
+
+	public void setTren(Tren tren) {
+		this.tren = tren;
+	}
+
+	public Integer getAsiento() {
+		return asiento;
+	}
+
+	public void setAsiento(Integer asiento) {
+		this.asiento = asiento;
+	}
+
+	@Override
+	public String toString() {
+		return "Billete [numBillete=" + numBillete + ", fecha=" + fecha + ", vagon=" + vagon + ", tren=" + tren
+				+ ", asiento=" + asiento + "]";
+	}
+
+	public Billete(Fecha fecha, Integer vagon, Tren tren, Integer asiento) {
+		super();
+		this.fecha = fecha;
+		this.vagon = vagon;
+		this.tren = tren;
+		this.asiento = asiento;
+		this.numBillete = siguiente;
+		siguiente++;
+	}
 
 }

@@ -15,7 +15,7 @@ public class Tren {
 		super();
 		this.salida = "10:00";
 		this.llegada = "14:00";
-		this.vagones.add(new Vagon());
+		this.vagones.add(new Vagon(this));
 		this.numero=siguiente;
 		siguiente++;
 	}
@@ -48,18 +48,15 @@ public class Tren {
 	public void setLlegada(String llegada) {
 		this.llegada = llegada;
 	}
-	private void añadirvagon() {
-		vagones.add(new Vagon());
+	public void añadirvagon() {
+		this.vagones.add(new Vagon(this));
 	}
 	public void venderBillete() {
-		if (vagones.get(vagones.size()-1).completo()){
-			añadirvagon();
-		}
-		 vagones.get(vagones.size()-1).asignarasiento();
+		 vagones.get(vagones.size()-1).asignarasiento(this);
 		}
 
 	public ArrayList<Vagon> getVagones() {
-		return vagones;
+		return this.vagones;
 	}
 
 	public void setVagones(ArrayList<Vagon> vagones) {
