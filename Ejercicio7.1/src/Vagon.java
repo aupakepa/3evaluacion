@@ -25,7 +25,8 @@ public class Vagon {
 	}
 	@Override
 	public String toString() {
-		return "Vagon [num=" + num + ", asientos=" + Arrays.toString(asientos) + "]";
+		return "Vagon [num=" + num + ", asientos=" + Arrays.toString(asientos) + ", proximoasiento=" + proximoasiento
+				+ ", siguiente=" + siguiente + "]";
 	}
 	public Vagon() {
 		super();

@@ -24,12 +24,13 @@ public class Vagon {
 
 	@Override
 	public String toString() {
-		return "Vagon [num=" + num + ", asientos=" + Arrays.toString(asientos) + "]";
+		return "Vagon [num=" + num + ", asientos=" + Arrays.toString(asientos) + ", proximoasiento=" + proximoasiento
+				+ "]";
 	}
 
 	public Vagon(Tren tren) {
 		super();
-		this.num = tren.getVagones().size();
+		this.num = tren.getVagones().size()+1;
 		asientos[0] = this.num;
 		this.proximoasiento = 1;
 	}

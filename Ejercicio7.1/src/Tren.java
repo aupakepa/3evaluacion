@@ -5,7 +5,7 @@ import utilidades.Fecha;
 /*•	Cada tren se identifica con un número de tren,  una hora de salida 
 y las estaciones de salida y llegada. El número de tren es único.*/
 
-public class Tren {
+public class Tren implements Comparable<Tren> {
 	private Integer numero;
 	private String salida;
 	private String llegada;
@@ -33,7 +33,8 @@ public class Tren {
 
 	@Override
 	public String toString() {
-		return "Tren [numero=" + numero + ", salida=" + salida + ", Llegada=" + llegada + "]";
+		return "Tren [numero=" + numero + ", salida=" + salida + ", llegada=" + llegada + ", fecha=" + fecha
+				+ ", vagones=" + vagones + "]";
 	}
 
 	public Integer getNumero() {
@@ -75,5 +76,19 @@ public class Tren {
 
 	public void setVagones(ArrayList<Vagon> vagones) {
 		this.vagones = vagones;
+	}
+
+	@Override
+	public int compareTo(Tren o) {
+		// TODO Auto-generated method stub
+		int num=this.numero-o.getNumero();
+		if (num==0) {
+			return this.fecha.getAnio()*10000 + this.fecha.getMes()*100+this.fecha.getDia()-(o.fecha.getAnio()*10000 + o.fecha.getMes()*100+o.fecha.getDia());
+		}else {
+			return this.numero-o.getNumero();
+
+		}
+		
+		
 	}
 }

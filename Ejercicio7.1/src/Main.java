@@ -28,6 +28,12 @@ public class Main {
 		for (Billete billete : billetes) {
 			Leer.mostrarEnPantalla(billete.toString());
 		}
+		
+		Collections.sort(trenes);
+		Leer.mostrarEnPantalla("---------------------------------------");
+		for (Tren tren : trenes) {
+			Leer.mostrarEnPantalla(tren.toString());
+		}
 	}
 	public static Comparator<Billete> fechaComparator = new Comparator<Billete>() {
 

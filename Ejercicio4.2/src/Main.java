@@ -27,6 +27,8 @@ public class Main {
 		TreeMap<String, String> contraseñas = new TreeMap<>();
 		int menu = -1;
 		String usuario;
+		Fichero fichero = new Fichero("fichero.txt", "I");
+		leerFichero(fichero, contraseñas);
 		do {
 			Leer.mostrarEnPantalla("----------------------");
 			Leer.mostrarEnPantalla("1.Introducir Usuario");
@@ -38,29 +40,31 @@ public class Main {
 			menu = Leer.pedirEntero("introduzca una opcion de menu");
 			switch (menu) {
 			case 1:
-				crearUsuario(contraseñas);
+				Fichero fichero2 = new Fichero("fichero.txt", "O");
+				crearUsuario(contraseñas, fichero2);
 
 				break;
 			case 2:
-				usuario=Leer.pedirCadena("introduzca usuario que desa borrar");//error al introducir un usuario en blanco
+				usuario = Leer.pedirCadena("introduzca usuario que desa borrar");// error al introducir un usuario en
+				// blanco
 				if (validarContraseña(contraseñas, usuario)) {
 					contraseñas.remove(usuario);
-					Leer.mostrarEnPantalla("Usuario "+ usuario+" borrado");
+					Leer.mostrarEnPantalla("Usuario " + usuario + " borrado");
 				} else {
 					Leer.mostrarEnPantalla("La contraseña no es correcta");
 				}
 				break;
 			case 3:
-				usuario=Leer.pedirCadena("introduzca el usuario a modificar");
+				usuario = Leer.pedirCadena("introduzca el usuario a modificar");
 				if (validarContraseña(contraseñas, usuario)) {
 					contraseñas.replace(usuario, crearContraseña());
 					Leer.mostrarEnPantalla("Usuario Modificado");
-				}else {
+				} else {
 					Leer.mostrarEnPantalla("contraseña no es correcta");
 				}
 				break;
 			case 4:
-				usuario=Leer.pedirCadena("introduzca usuario que desa validar");
+				usuario = Leer.pedirCadena("introduzca usuario que desa validar");
 				if (validarContraseña(contraseñas, usuario)) {
 					Leer.mostrarEnPantalla("El usuario ha sido validado");
 				} else {
@@ -81,16 +85,16 @@ public class Main {
 	private static boolean validarContraseña(TreeMap<String, String> contraseñas, String usuario) {
 		String contraseña = Leer.pedirCadena("Introduzca la contraseña");
 		contraseña = cifrarContraseña(contraseña);
-		boolean validar=false;
+		boolean validar = false;
 		if (contraseñas.get(usuario).equals(contraseña)) {
 			Leer.mostrarEnPantalla("La contraseña es correcta");
-			validar=true;
+			validar = true;
 		}
 		return validar;
 	}
 
-	private static void crearUsuario(TreeMap<String, String> contraseñas) {
-		String usuario,contraseña;
+	private static void crearUsuario(TreeMap<String, String> contraseñas, Fichero fichero) {
+		String usuario, contraseña;
 		Boolean validar;
 		do {
 			validar = true;
@@ -102,10 +106,12 @@ public class Main {
 				Leer.mostrarEnPantalla("El usuario esta disponible");
 			}
 		} while (!validar);
-		contraseña=crearContraseña();
+		contraseña = crearContraseña();
 
 		contraseña = cifrarContraseña(contraseña);
 		contraseñas.put(usuario, contraseña);
+		fichero.escribir(contraseñas);
+		fichero.cerrar("O");
 	}
 
 	private static String crearContraseña() {
@@ -129,4 +135,36 @@ public class Main {
 		return contraseñaCifrada;
 	}
 
+	public static void leerFichero(Fichero fichero, TreeMap<String,String> contraseñas) {
+		Fichero nuevo = new Fichero("fichero.txt", "I");
+		String linea = "";
+		while (linea != null) {
+			linea = nuevo.leer();
+			if (linea != null) {
+				String nombre = "";
+				String contraseña = "";
+				try {
+					if (linea.length() != 0) {// si tiene contenido procesamos sabiendo que separa cada campo y cuantos
+						// campos tiene
+						// los valores de cada atributo estan separados por lo que devuelve
+						// getSeparador() En este caso ;
+						if (linea.indexOf(Separable.getSeparador()) != -1) {// recuperamos el valor del primer atributo
+							nombre = linea.substring(0, linea.indexOf(Separable.getSeparador()));
+							contraseña = linea.substring(linea.indexOf(Separable.getSeparador()) + 1);
+							contraseñas.put(nombre, contraseña);
+						} else {
+							Leer.mostrarEnPantalla("No se ha almacenado el dato por faltar nombre o contraseña");
+						}
+
+					}
+					// persona=new Persona(nombre,apellido,edad);
+					// return persona;
+				} catch (NullPointerException e) {
+					// return null;
+				}
+			}
+		}
+		nuevo.cerrar("I");
+
+	}
 }

@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -32,7 +34,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		HashMap<Fecha, Tren> trenes = new HashMap<Fecha, Tren>();
+		TreeMap<Fecha, Tren> trenes = new TreeMap<Fecha, Tren>();
 		trenes.put(new Fecha(24, 04, 2018), new Tren());
 		trenes.put(new Fecha(27, 04, 2018), new Tren());
 		trenes.put(new Fecha(28, 04, 2018), new Tren());
@@ -44,7 +46,7 @@ public class Main {
 			Iterator<Fecha> it = trenes.keySet().iterator();
 			int trenazar = (int) (Math.random() * trenes.size());
 			Fecha fecha = it.next();
-			for (int j = 0; j < trenazar - 1; j++) {
+			for (int j = 0; j < trenazar; j++) {
 				fecha = it.next();
 			}
 			Tren tren = trenes.get(fecha);
@@ -55,6 +57,10 @@ public class Main {
 		}
 		for (Billete billete : billetes) {
 			Leer.mostrarEnPantalla(billete.toString());
+		}
+		Leer.mostrarEnPantalla("---------------------------------------------------");
+		for (Entry<Fecha, Tren> tren : trenes.entrySet()) {
+			Leer.mostrarEnPantalla(tren.getKey() + tren.getValue().toString());
 		}
 	}
 }

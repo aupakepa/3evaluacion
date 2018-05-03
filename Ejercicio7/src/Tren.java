@@ -4,7 +4,7 @@ import java.util.ArrayList;
 /*•	Cada tren se identifica con un número de tren,  una hora de salida 
 y las estaciones de salida y llegada. El número de tren es único.*/
 
-public class Tren {
+public class Tren implements Comparable<Tren>{
 	private Integer numero;
 	private String salida;
 	private String llegada;
@@ -22,7 +22,7 @@ public class Tren {
 
 	@Override
 	public String toString() {
-		return "Tren [numero=" + numero + ", salida=" + salida + ", Llegada=" + llegada + "]";
+		return "Tren [numero=" + numero + ", salida=" + salida + ", llegada=" + llegada + ", vagones=" + vagones + "]";
 	}
 
 	public Integer getNumero() {
@@ -61,5 +61,11 @@ public class Tren {
 
 	public void setVagones(ArrayList<Vagon> vagones) {
 		this.vagones = vagones;
+	}
+
+	@Override
+	public int compareTo(Tren tren) {
+		// TODO Auto-generated method stub
+		return this.numero-tren.getNumero();
 	}
 }
