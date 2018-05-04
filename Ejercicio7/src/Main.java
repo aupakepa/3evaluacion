@@ -1,11 +1,8 @@
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 
 import utilidades.Fecha;
 import utilidades.Leer;
@@ -34,7 +31,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		TreeMap<Fecha, Tren> trenes = new TreeMap<Fecha, Tren>();
+		HashMap<Fecha, Tren> trenes = new HashMap<Fecha, Tren>();
 		trenes.put(new Fecha(24, 04, 2018), new Tren());
 		trenes.put(new Fecha(27, 04, 2018), new Tren());
 		trenes.put(new Fecha(28, 04, 2018), new Tren());
@@ -50,10 +47,10 @@ public class Main {
 				fecha = it.next();
 			}
 			Tren tren = trenes.get(fecha);
-			Vagon vagon = tren.getVagones().get(tren.getVagones().size() - 1);
+			Integer vagon = tren.buscarVagon()+1;
 			tren.venderBillete();
-			Integer asiento = vagon.getAsientos()[vagon.getProximoasiento()-1];
-			billetes.add(new Billete(fecha, vagon.getNum(), tren, asiento));
+			Integer asiento = tren.getVagones().get(vagon-1).asientoVacio();
+			billetes.add(new Billete(fecha, vagon, tren, asiento));
 		}
 		for (Billete billete : billetes) {
 			Leer.mostrarEnPantalla(billete.toString());

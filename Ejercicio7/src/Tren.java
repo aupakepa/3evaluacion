@@ -52,9 +52,32 @@ public class Tren implements Comparable<Tren>{
 		this.vagones.add(new Vagon(this));
 	}
 	public void venderBillete() {
+		if (this.trenCompleto()) {
+			this.añadirvagon();
+		}
+		 vagones.get(this.buscarVagon()).asignarasiento(this);
+		}
+	public Integer buscarVagon() {
+		int vagon=vagones.size()-1;
+		for (int i = vagones.size()-1; i >=0 ; i--) {
+					if (!vagones.get(i).completo()) {
+						vagon=i;
+					}
+				}
+		return vagon;
+			}
+	public boolean trenCompleto() {
+		boolean completo=true;
+		for (int i = 0; i < vagones.size(); i++) {
+			if (!vagones.get(i).completo()) {
+				completo=false;
+			}
+		}
+		return completo;
+	}
+	public void anularBillete(Integer vagon,Integer asiento) {
 		 vagones.get(vagones.size()-1).asignarasiento(this);
 		}
-
 	public ArrayList<Vagon> getVagones() {
 		return this.vagones;
 	}

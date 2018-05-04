@@ -5,6 +5,26 @@ import java.util.Comparator;
 import utilidades.Fecha;
 import utilidades.Leer;
 
+/*2.	Escribe un proyecto en Java que permita gestionar la venta de billetes de tren.
+
+Crea las clases que se necesiten, los métodos adecuados en cada clase y las colecciones que sean más adecuadas. 
+(crea tres trenes de forma fija)
+•	Cada tren se identifica con un número de tren,  una hora de salida y las estaciones de salida y llegada. 
+El número de tren es único.
+•	El tren para una fecha se compondrá de vagones.
+Cada vagón tiene una capacidad de 10 asientos, numerados del 1 al 10. 
+Los vagones se numeran secuencialmente. Al tren se le van añadiendo vagones según se van llenando.
+(cada vagón se puede guardar en un array de 11 elementos en el que la posición 0.
+se guarda el número de vagón y de las posiciones 1 a la 10 un 0 si están libres ó un 1 si están ocupados. 
+También se puede guardar el número del billete en el que se ha vendido).
+•	La venta de billetes se realiza para una fecha (utiliza la clase Fecha) en un tren concreto, un vagón y un asiento. (atributos de la clase billete: número, fecha, tren, vagón, asiento y precio) Cada billete lleva su precio y su número identificador.
+•	Los billetes se pueden devolver (borrar el billete), lo que dejará el asiento correspondiente libre que serán los primeros en ser ofertados en la siguiente venta para la fecha correspondiente. Los billetes se guardan en una list o set.
+•	Los billetes podrán ser ordenada por diferentes criterios: 
+o	número de billete: datos de billetes (de billetes)
+o	fecha, tren, vagón y asiento: (este puede salir del mapa con clave la fecha y valor que puede ser el billete).
+o	tren, fecha, vagón : asientos vendidos (de billetes)
+•	El menú del programa tiene venta de billetes, anulación de billetes y listados por las tres opciones anteriores.
+ */
 public class Main {
 
 	public static void main(String[] args) {
@@ -17,35 +37,95 @@ public class Main {
 
 		ArrayList<Billete> billetes = new ArrayList<Billete>();
 		for (int i = 0; i < 100; i++) {
-			int trenazar = (int) (Math.random()*trenes.size());
+			int trenazar = (int) (Math.random() * trenes.size());
 			Tren trenactual = trenes.get(trenazar);
+			Integer vagon = trenactual.
 			trenactual.venderBillete();
-			Billete ticket = new Billete(trenactual.getFecha(), (trenactual.getVagones().size()), trenactual, trenactual.getVagones().get(trenactual.getVagones().size()-1).getProximoasiento()-1);
+			Billete ticket = new Billete(trenactual.getFecha(), (trenactual.getVagones().size()), trenactual,
+					trenactual.getVagones().get(trenactual.getVagones().size() - 1).getProximoasiento() - 1);
 			billetes.add(ticket);
 		}
+		int menu = -1;
+		do {
+			Leer.mostrarEnPantalla("1.Venta de Billetes");
+			Leer.mostrarEnPantalla("2.Anulacion de Billetes");
+			Leer.mostrarEnPantalla("1.Venta de Billetes");
+			Leer.mostrarEnPantalla("3.Orden por fechas");
+			Leer.mostrarEnPantalla("4.Orden por num Tren");
+			Leer.mostrarEnPantalla("5.Orden por num");
+			Leer.mostrarEnPantalla("0.alir");
+			Leer.mostrarEnPantalla("-------------------------");
+			menu = Leer.pedirEntero("Introducir Opcion del menu");
+			switch (menu) {
+			case 1:
+				int i = 1;
+				for (Tren tren : trenes) {
+					Leer.mostrarEnPantalla(i+".-"+tren.toString());
+					i++;
+				}
+				Leer.mostrarEnPantalla("-----------------------------");
+				Tren trenactual = trenes.get(Leer.pedirEntero("introduzca el tren para el que desea el viaje"));
+				trenactual.venderBillete();
+				Fecha fecha = trenactual.getFecha();
+				Integer vagon = trenactual.getVagones().size()-1;
+				Integer asiento = trenactual.getVagones().get(trenactual.getVagones().size() - 1).getProximoasiento();
+				Billete ticket = new Billete(fecha, vagon, trenactual,asiento);
+				billetes.add(ticket);
+				break;
+
+			case 2:
+
+				break;
+
+			case 3:
+
+				break;
+
+			case 4:
+
+				break;
+
+			case 5:
+
+				break;
+
+			case 0:
+
+				break;
+
+			case 6:
+
+				break;
+
+			default:
+				break;
+			}
+		} while (menu != 0);
+
 		Collections.sort(billetes, fechaComparator);
 
 		for (Billete billete : billetes) {
 			Leer.mostrarEnPantalla(billete.toString());
 		}
-		
+
 		Collections.sort(trenes);
 		Leer.mostrarEnPantalla("---------------------------------------");
 		for (Tren tren : trenes) {
 			Leer.mostrarEnPantalla(tren.toString());
 		}
 	}
+
 	public static Comparator<Billete> fechaComparator = new Comparator<Billete>() {
 
 		public int compare(Billete billete1, Billete billete2) {
 
-	     
-	      return (billete1.getFecha().getAnio()*10000+billete1.getFecha().getMes()*100+billete1.getFecha().getDia())
-	    		  -(billete2.getFecha().getAnio()*10000+billete2.getFecha().getMes()*100+billete2.getFecha().getDia());
+			int ordenFecha = -billete1.getFecha().difFechas(billete2.getFecha()) * 100;
+			int ordenTren = (billete1.getTren().getNumero() - billete2.getTren().getNumero()) * 10000;
+			int ordenVagon = (billete1.getVagon() - billete2.getVagon()) * 10;
+			int ordenAsiento = billete1.getAsiento() - billete2.getAsiento();
+			return (ordenFecha + ordenTren + ordenVagon + ordenAsiento);
 
-	      
-	    }
+		}
+	};
 
-
-};
 }

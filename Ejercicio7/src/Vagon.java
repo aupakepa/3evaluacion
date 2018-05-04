@@ -3,7 +3,6 @@ import java.util.Arrays;
 public class Vagon {
 	private Integer num;
 	private Integer asientos[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-	private Integer proximoasiento;
 
 
 	public Integer getNum() {
@@ -24,25 +23,14 @@ public class Vagon {
 
 	@Override
 	public String toString() {
-		return "Vagon [num=" + num + ", asientos=" + Arrays.toString(asientos) + ", proximoasiento=" + proximoasiento
-				+ "]";
+		return "Vagon [num=" + num + ", asientos=" + Arrays.toString(asientos) + "]";
 	}
 
 	public Vagon(Tren tren) {
 		super();
 		this.num = tren.getVagones().size()+1;
 		asientos[0] = this.num;
-		this.proximoasiento = 1;
 	}
-
-	public Integer getProximoasiento() {
-		return proximoasiento;
-	}
-
-	public void setProximoasiento(Integer proximoasiento) {
-		this.proximoasiento = proximoasiento;
-	}
-
 	public boolean completo() {
 		boolean completo = true;
 		for (int i = 1; i < asientos.length; i++) {
@@ -54,11 +42,16 @@ public class Vagon {
 	}
 
 	public void asignarasiento(Tren tren) {
-		this.asientos[proximoasiento] = proximoasiento;
-		proximoasiento=proximoasiento+1;
-		if (this.completo()) {
-			tren.añadirvagon();
+		
+		this.asientos[this.asientoVacio()] = this.asientoVacio();	
+	}
+ public Integer asientoVacio() {
+	 Integer asiento=null;
+	 for (int i = asientos.length-1; i > 0 ; i--) {
+		if (asientos[i]==0) {
+			asiento=i;
 		}
 	}
-
+	 return asiento;
+ }
 }
