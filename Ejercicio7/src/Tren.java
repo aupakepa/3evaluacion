@@ -52,10 +52,11 @@ public class Tren implements Comparable<Tren>{
 		this.vagones.add(new Vagon(this));
 	}
 	public void venderBillete() {
-		if (this.trenCompleto()) {
-			this.añadirvagon();
-		}
+		
 		 vagones.get(this.buscarVagon()).asignarasiento(this);
+		 if (this.trenCompleto()) {
+				this.añadirvagon();
+			}
 		}
 	public Integer buscarVagon() {
 		int vagon=vagones.size()-1;

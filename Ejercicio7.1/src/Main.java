@@ -39,20 +39,21 @@ public class Main {
 		for (int i = 0; i < 100; i++) {
 			int trenazar = (int) (Math.random() * trenes.size());
 			Tren trenactual = trenes.get(trenazar);
-			Integer vagon = trenactual.
+			Integer vagon = trenactual.buscarVagon()+1;
+			Fecha fecha = trenactual.getFecha();
+			Integer asiento = trenactual.getVagones().get(vagon-1).asientoVacio();
 			trenactual.venderBillete();
-			Billete ticket = new Billete(trenactual.getFecha(), (trenactual.getVagones().size()), trenactual,
-					trenactual.getVagones().get(trenactual.getVagones().size() - 1).getProximoasiento() - 1);
+			Billete ticket= new Billete(fecha, vagon, trenactual, asiento);
 			billetes.add(ticket);
 		}
 		int menu = -1;
 		do {
 			Leer.mostrarEnPantalla("1.Venta de Billetes");
 			Leer.mostrarEnPantalla("2.Anulacion de Billetes");
-			Leer.mostrarEnPantalla("1.Venta de Billetes");
 			Leer.mostrarEnPantalla("3.Orden por fechas");
 			Leer.mostrarEnPantalla("4.Orden por num Tren");
 			Leer.mostrarEnPantalla("5.Orden por num");
+			Leer.mostrarEnPantalla("6.Listar Blletes");
 			Leer.mostrarEnPantalla("0.alir");
 			Leer.mostrarEnPantalla("-------------------------");
 			menu = Leer.pedirEntero("Introducir Opcion del menu");
@@ -64,20 +65,47 @@ public class Main {
 					i++;
 				}
 				Leer.mostrarEnPantalla("-----------------------------");
-				Tren trenactual = trenes.get(Leer.pedirEntero("introduzca el tren para el que desea el viaje"));
-				trenactual.venderBillete();
+				Tren trenactual = trenes.get(Leer.pedirEntero("introduzca el tren para el que desea el viaje")-1);
 				Fecha fecha = trenactual.getFecha();
-				Integer vagon = trenactual.getVagones().size()-1;
-				Integer asiento = trenactual.getVagones().get(trenactual.getVagones().size() - 1).getProximoasiento();
+				Integer vagon = trenactual.buscarVagon()+1;
+				Integer asiento = trenactual.getVagones().get(vagon-1).asientoVacio();
+				trenactual.venderBillete();
 				Billete ticket = new Billete(fecha, vagon, trenactual,asiento);
 				billetes.add(ticket);
 				break;
 
 			case 2:
-
+				for (Tren tren : trenes) {
+					Leer.mostrarEnPantalla(tren.getNumero()+".-"+tren.toString());
+				}
+				Integer numeroBillete = Leer.pedirEntero("introduce el numero de billete");
+				
+				int j=0;
+				int posicion=-1;
+				for (Billete billete : billetes) {
+					if (billete.getNumBillete()==numeroBillete) {
+					posicion=j;
+					}
+				j++;	
+				}
+				vagon = billetes.get(posicion).getVagon();
+				asiento= billetes.get(posicion).getAsiento();
+				trenactual = billetes.get(posicion).getTren();
+				trenactual.anularBillete(vagon, asiento);
+				if (posicion!=-1) {
+					billetes.remove(posicion);
+					Leer.mostrarEnPantalla("Billete : "+numeroBillete+ " anulado");
+				}else {
+					Leer.mostrarEnPantalla("El billete no es correcto");
+				}
 				break;
 
-			case 3:
+			case 3:Collections.sort(billetes, fechaComparator);
+
+			for (Billete billete : billetes) {
+				Leer.mostrarEnPantalla(billete.toString());
+			}
+
 
 				break;
 
@@ -94,7 +122,9 @@ public class Main {
 				break;
 
 			case 6:
-
+				for (Billete billete : billetes) {
+					Leer.mostrarEnPantalla(billete.toString());
+				}
 				break;
 
 			default:
@@ -102,12 +132,7 @@ public class Main {
 			}
 		} while (menu != 0);
 
-		Collections.sort(billetes, fechaComparator);
-
-		for (Billete billete : billetes) {
-			Leer.mostrarEnPantalla(billete.toString());
-		}
-
+		
 		Collections.sort(trenes);
 		Leer.mostrarEnPantalla("---------------------------------------");
 		for (Tren tren : trenes) {

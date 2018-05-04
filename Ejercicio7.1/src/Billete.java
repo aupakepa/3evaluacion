@@ -8,6 +8,13 @@ o	fecha, tren, vagón y asiento: (este puede salir del mapa con clave la fecha y 
 o	tren, fecha, vagón : asientos vendidos (de billetes)*/
 public class Billete {
 	private Integer numBillete;
+	public Integer getNumBillete() {
+		return numBillete;
+	}
+	public void setNumBillete(Integer numBillete) {
+		this.numBillete = numBillete;
+	}
+
 	static Integer siguiente=1;
 private Fecha fecha;
 private Integer vagon;

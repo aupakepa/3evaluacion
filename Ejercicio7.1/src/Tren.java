@@ -2,10 +2,11 @@ import java.util.ArrayList;
 
 import utilidades.Fecha;
 
+
 /*•	Cada tren se identifica con un número de tren,  una hora de salida 
 y las estaciones de salida y llegada. El número de tren es único.*/
 
-public class Tren implements Comparable<Tren> {
+public class Tren implements Comparable<Tren>{
 	private Integer numero;
 	private String salida;
 	private String llegada;
@@ -15,10 +16,10 @@ public class Tren implements Comparable<Tren> {
 
 	public Tren(Fecha fecha) {
 		super();
+		this.fecha=fecha;
 		this.salida = "10:00";
 		this.llegada = "14:00";
-		this.fecha = fecha;
-		this.vagones.add(new Vagon());
+		this.vagones.add(new Vagon(this));
 		this.numero=siguiente;
 		siguiente++;
 	}
@@ -60,18 +61,39 @@ public class Tren implements Comparable<Tren> {
 	public void setLlegada(String llegada) {
 		this.llegada = llegada;
 	}
-	private void añadirvagon() {
-		vagones.add(new Vagon());
+	public void añadirvagon() {
+		this.vagones.add(new Vagon(this));
 	}
 	public void venderBillete() {
-		if (vagones.get(vagones.size()-1).completo()){
-			añadirvagon();
+		
+		 vagones.get(this.buscarVagon()).asignarasiento(this);
+		 if (this.trenCompleto()) {
+				this.añadirvagon();
+			}
 		}
-		 vagones.get(vagones.size()-1).asignarasiento();
+	public Integer buscarVagon() {
+		int vagon=vagones.size()-1;
+		for (int i = vagones.size()-1; i >=0 ; i--) {
+					if (!vagones.get(i).completo()) {
+						vagon=i;
+					}
+				}
+		return vagon;
+			}
+	public boolean trenCompleto() {
+		boolean completo=true;
+		for (int i = 0; i < vagones.size(); i++) {
+			if (!vagones.get(i).completo()) {
+				completo=false;
+			}
 		}
-
+		return completo;
+	}
+	public void anularBillete(Integer vagon,Integer asiento) {
+		 vagones.get(vagon-1).getAsientos()[asiento]=0;
+		}
 	public ArrayList<Vagon> getVagones() {
-		return vagones;
+		return this.vagones;
 	}
 
 	public void setVagones(ArrayList<Vagon> vagones) {
@@ -79,16 +101,8 @@ public class Tren implements Comparable<Tren> {
 	}
 
 	@Override
-	public int compareTo(Tren o) {
+	public int compareTo(Tren tren) {
 		// TODO Auto-generated method stub
-		int num=this.numero-o.getNumero();
-		if (num==0) {
-			return this.fecha.getAnio()*10000 + this.fecha.getMes()*100+this.fecha.getDia()-(o.fecha.getAnio()*10000 + o.fecha.getMes()*100+o.fecha.getDia());
-		}else {
-			return this.numero-o.getNumero();
-
-		}
-		
-		
+		return this.numero-tren.getNumero();
 	}
 }

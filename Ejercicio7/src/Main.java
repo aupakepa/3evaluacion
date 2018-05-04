@@ -48,8 +48,8 @@ public class Main {
 			}
 			Tren tren = trenes.get(fecha);
 			Integer vagon = tren.buscarVagon()+1;
-			tren.venderBillete();
 			Integer asiento = tren.getVagones().get(vagon-1).asientoVacio();
+			tren.venderBillete();
 			billetes.add(new Billete(fecha, vagon, tren, asiento));
 		}
 		for (Billete billete : billetes) {
