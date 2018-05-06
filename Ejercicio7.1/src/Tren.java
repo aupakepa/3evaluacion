@@ -1,12 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
-
-import utilidades.Fecha;
-
 
 /*•	Cada tren se identifica con un número de tren,  una hora de salida 
 y las estaciones de salida y llegada. El número de tren es único.*/
 
-public class Tren implements Comparable<Tren>{
+public class Tren implements Comparable<Tren>,Serializable{
 	private Integer numero;
 	private String salida;
 	private String llegada;

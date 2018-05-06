@@ -1,6 +1,11 @@
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Vagon {
+public class Vagon implements Serializable,Separable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer num;
 	private Integer asientos[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -23,7 +28,7 @@ public class Vagon {
 
 	@Override
 	public String toString() {
-		return "Vagon [num=" + num + ", asientos=" + Arrays.toString(asientos) + "]";
+		return num+getSeparador()+"\n"+Arrays.toString(asientos)+getSeparador()+"\n";
 	}
 
 	public Vagon(Tren tren) {

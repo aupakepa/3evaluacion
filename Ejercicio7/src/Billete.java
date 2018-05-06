@@ -1,4 +1,4 @@
-import utilidades.Fecha;
+import java.io.Serializable;
 
 /*La venta de billetes se realiza para una fecha (utiliza la clase Fecha) en un tren concreto, un vagón y un asiento. (atributos de la clase billete: número, fecha, tren, vagón, asiento y precio) Cada billete lleva su precio y su número identificador.
 •	Los billetes se pueden devolver (borrar el billete), lo que dejará el asiento correspondiente libre que serán los primeros en ser ofertados en la siguiente venta para la fecha correspondiente. Los billetes se guardan en una list o set.
@@ -6,7 +6,11 @@ import utilidades.Fecha;
 o	número de billete: datos de billetes (de billetes)
 o	fecha, tren, vagón y asiento: (este puede salir del mapa con clave la fecha y valor que puede ser el billete).
 o	tren, fecha, vagón : asientos vendidos (de billetes)*/
-public class Billete {
+public class Billete implements Serializable,Separable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer numBillete;
 	static Integer siguiente = 1;
 	private Fecha fecha;
@@ -48,8 +52,8 @@ public class Billete {
 
 	@Override
 	public String toString() {
-		return "Billete [numBillete=" + numBillete + ", fecha=" + fecha + ", vagon=" + vagon + ", tren=" + tren
-				+ ", asiento=" + asiento + "]";
+		return "Billete [numBillete=" + numBillete + ", fecha=" + fecha + ", vagon=" + vagon + ", tren=" + tren.getNumero()
+				+ ", asiento=" + asiento +"]"+ "\n";
 	}
 
 	public Billete(Fecha fecha, Integer vagon, Tren tren, Integer asiento) {

@@ -1,10 +1,8 @@
+import java.io.File;
 import java.util.ArrayList;
-
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
-import utilidades.Fecha;
 import utilidades.Leer;
 
 /*2.	Escribe un proyecto en Java que permita gestionar la venta de billetes de tren.
@@ -31,33 +29,96 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		HashMap<Fecha, Tren> trenes = new HashMap<Fecha, Tren>();
-		trenes.put(new Fecha(24, 04, 2018), new Tren());
-		trenes.put(new Fecha(27, 04, 2018), new Tren());
-		trenes.put(new Fecha(28, 04, 2018), new Tren());
-		for (Entry<Fecha, Tren> tren : trenes.entrySet()) {
+		TreeMap<Fecha, ArrayList<Tren>> trenes = new TreeMap<Fecha, ArrayList<Tren>>();//lEER FICHERO TRENES
+		File t = new File("trenes.txt");
+		trenes = leerTrenes(trenes, t);
+		ArrayList<Billete> billetes = new ArrayList<Billete>();
+		billetes = leerBilletes(t, billetes);
+		/*Fecha fecha = new Fecha(24, 04, 2018);
+		crearTren(trenes,fecha);
+		crearTren(trenes,fecha);
+		crearTren(trenes,fecha);
+		crearTren(trenes,new Fecha(28, 04, 2018));*/
+		/*mapatrenes = new Fichero2("trenes.txt","O");//Apertura del fichero de entrada.donde escribimos
+		mapatrenes.escribir(trenes);
+		mapatrenes.cerrar("O");*/
+		for (Entry<Fecha, ArrayList<Tren>> tren : trenes.entrySet()) {
 			Leer.mostrarEnPantalla(tren.getKey() + tren.getValue().toString());
 		}
-		ArrayList<Billete> billetes = new ArrayList<Billete>();
+		/*File f = new File("fichero.txt");
+		Fichero listabilletes;
+		if (f.exists()){
+			listabilletes = new Fichero("fichero.txt","I");//Apertura del fichero de entrada.donde leemos
+			billetes=listabilletes.leer();
+			listabilletes.cerrar("I");
+		}else {
+			Leer.mostrarEnPantalla("El fichero no existe");
+		}*/
+		/*Fecha fechatren=new Fecha(1, 1, 1);
 		for (int i = 0; i < 100; i++) {
-			Iterator<Fecha> it = trenes.keySet().iterator();
-			int trenazar = (int) (Math.random() * trenes.size());
-			Fecha fecha = it.next();
-			for (int j = 0; j < trenazar; j++) {
-				fecha = it.next();
-			}
-			Tren tren = trenes.get(fecha);
-			Integer vagon = tren.buscarVagon()+1;
-			Integer asiento = tren.getVagones().get(vagon-1).asientoVacio();
-			tren.venderBillete();
-			billetes.add(new Billete(fecha, vagon, tren, asiento));
+			Set<Fecha> fechas = trenes.keySet();
+			int diatren=(int) (Math.random() * fechas.size());
+			Iterator<Fecha> it= fechas.iterator();
+			int j=0;
+			while (it.hasNext() && j<diatren+1) {
+				Fecha fecha2 = it.next();
+				fechatren = fecha2;
+				j++;
+			} 
+			int trenazar = (int) (Math.random() * trenes.get(fechatren).size());
+			Tren trenactual = trenes.get(fechatren).get(trenazar);
+			Integer vagon = trenactual.buscarVagon()+1;
+			Integer asiento = trenactual.getVagones().get(vagon-1).asientoVacio();
+			trenactual.venderBillete();
+			Billete ticket = new Billete(fechatren, vagon, trenactual, asiento);
+			billetes.add(ticket);
 		}
-		for (Billete billete : billetes) {
-			Leer.mostrarEnPantalla(billete.toString());
-		}
+		mapatrenes = new Fichero2("trenes.txt","O");//Apertura del fichero de entrada.donde escribimos
+		mapatrenes.escribir(trenes);
+		mapatrenes.cerrar("O");
+		File f = new File("billetes.txt");
+		Fichero listaBilletes;
+		listaBilletes=new Fichero("billetes.txt", "O");
+		listaBilletes.escribir(billetes);
+		listaBilletes.cerrar("O");*/
+		Leer.mostrarEnPantalla(billetes.toString());
+	
 		Leer.mostrarEnPantalla("---------------------------------------------------");
-		for (Entry<Fecha, Tren> tren : trenes.entrySet()) {
+		for (Entry<Fecha, ArrayList<Tren>> tren : trenes.entrySet()) {
 			Leer.mostrarEnPantalla(tren.getKey() + tren.getValue().toString());
 		}
 	}
-}
+	private static TreeMap<Fecha, ArrayList<Tren>> leerTrenes(TreeMap<Fecha, ArrayList<Tren>> trenes, File t) {
+		Fichero2 mapatrenes;
+		if (t.exists()){
+			mapatrenes = new Fichero2("trenes.txt","I");//Apertura del fichero de entrada.donde leemos
+			trenes=mapatrenes.leer();
+			mapatrenes.cerrar("I");
+		}else {
+			Leer.mostrarEnPantalla("El fichero no existe");
+		}
+		return trenes;
+	}
+	private static ArrayList<Billete> leerBilletes(File t, ArrayList<Billete> billetes) {
+		File f = new File("billetes.txt");//lEER FICHERO BILLETES
+		Fichero listaBilletes;
+		if (t.exists()){
+			listaBilletes = new Fichero("billetes.txt","I");//Apertura del fichero de entrada.donde leemos
+			billetes=listaBilletes.leer();
+			listaBilletes.cerrar("I");
+		}else {
+			Leer.mostrarEnPantalla("El fichero no existe");
+		}
+		return billetes;
+	}
+		private static void crearTren(TreeMap<Fecha, ArrayList<Tren>> trenes,Fecha fecha) {
+			if (trenes.containsKey(fecha)) {
+				trenes.get(fecha).add(new Tren());
+			}else{
+				trenes.put(fecha, new ArrayList<Tren>());
+				trenes.get(fecha).add(new Tren());
+			}
+
+
+		}
+	}

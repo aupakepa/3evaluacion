@@ -1,18 +1,18 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-public class GestionLeerPersonas implements Separable{
+public class GestionLeerPersonas {
 
 	public static void main(String[] args) {
-		File f = new File("fichero.txt");
-		Fichero ficheroTexto;
 		List<Persona> lista = new ArrayList<>();//Lista para guardar las personas
+		File f = new File("fichero.da2");
+		Fichero ficheroTexto;
 		if (f.exists()){
-			ficheroTexto = new Fichero("fichero.txt","I");//Apertura del fichero de entrada.donde leemos
-			leeFichero(lista, ficheroTexto);
+			ficheroTexto = new Fichero("fichero.da2","I");//Apertura del fichero de entrada.donde leemos
+			lista=leeFichero(ficheroTexto);
 		}
 		anadePersonas(lista);
-		ficheroTexto = new Fichero("fichero.txt","O");//abrimos el fichero para escritura
+		ficheroTexto = new Fichero("fichero.da2","O");//abrimos el fichero para escritura
 		escribeFichero(lista, ficheroTexto);
 	}
 
@@ -32,22 +32,19 @@ public class GestionLeerPersonas implements Separable{
 	}
 
 	private static void escribeFichero(List<Persona> lista, Fichero ficheroTexto) {
-		for(Persona e:lista){//recorremos la lista y vamos escribiendo el contenido en el fichero
-			ficheroTexto.escribir(e);
-		}
+		//escribimos la lista en el fichero
+		ficheroTexto.escribir(lista);
 		ficheroTexto.cerrar("O");//Cerramos el fichero de escritura	
 	}
 
-	private static void leeFichero(List<Persona> lista, Fichero ficheroTexto) {
-		Persona reg;
-		reg = ficheroTexto.leer();
-		while (reg != null) {
-			lista.add(reg);//lo añadimos a la lista
+	private static List<Persona> leeFichero(Fichero ficheroTexto) {
+		List<Persona> lista = ficheroTexto.leer();
+		for (Persona reg : lista) {
 			Leer.mostrarEnPantalla("Nombre  : " + reg.getNombre());//imprimimos nombre
 			Leer.mostrarEnPantalla("Apellido: " + reg.getApellido());//imprimimos apellido
 			Leer.mostrarEnPantalla("Edad : " + reg.getEdad()+"\n");//imprimimos edad
-			reg = ficheroTexto.leer();//leemos siguiente
 		}
 		ficheroTexto.cerrar("I");//cerrar fichero de lectura 
+		return lista;
 	}
 }

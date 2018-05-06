@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Vagon {
+public class Vagon implements Serializable {
 	private Integer num;
 	private Integer asientos[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
