@@ -4,7 +4,7 @@ import java.util.ArrayList;
 /*•	Cada tren se identifica con un número de tren,  una hora de salida 
 y las estaciones de salida y llegada. El número de tren es único.*/
 
-public class Tren implements Comparable<Tren>,Serializable{
+public class Tren implements Comparable<Tren>, Serializable {
 	private Integer numero;
 	private String salida;
 	private String llegada;
@@ -14,11 +14,11 @@ public class Tren implements Comparable<Tren>,Serializable{
 
 	public Tren(Fecha fecha) {
 		super();
-		this.fecha=fecha;
+		this.fecha = fecha;
 		this.salida = "10:00";
 		this.llegada = "14:00";
 		this.vagones.add(new Vagon(this));
-		this.numero=siguiente;
+		this.numero = siguiente;
 		siguiente++;
 	}
 
@@ -59,39 +59,48 @@ public class Tren implements Comparable<Tren>,Serializable{
 	public void setLlegada(String llegada) {
 		this.llegada = llegada;
 	}
+
 	public void añadirvagon() {
 		this.vagones.add(new Vagon(this));
 	}
+
 	public void venderBillete() {
-		
-		 vagones.get(this.buscarVagon()).asignarasiento(this);
-		 if (this.trenCompleto()) {
-				this.añadirvagon();
+
+		vagones.get(this.buscarVagon()).asignarasiento(this);
+		if (this.trenCompleto()) {
+			this.añadirvagon();
+		}
+	}
+
+	public Integer buscarVagon() {
+		int vagon = vagones.size() - 1;
+		boolean salida = true;
+		int i = 0;
+		while (i < vagones.size() && salida != true) {
+			if (!vagones.get(i).completo()) {
+				salida = false;
+				vagon = i;
+				i++;
 			}
 		}
-	public Integer buscarVagon() {
-		int vagon=vagones.size()-1;
-		boolean salida=true;
-		for (int i = 1; i <vagones.size() || salida==true; i++) {
-					if (!vagones.get(i).completo()) {
-						salida=false;
-						vagon=i;
-					}
-				}
+
 		return vagon;
-			}
+	}
+
 	public boolean trenCompleto() {
-		boolean completo=true;
+		boolean completo = true;
 		for (int i = 0; i < vagones.size(); i++) {
 			if (!vagones.get(i).completo()) {
-				completo=false;
+				completo = false;
 			}
 		}
 		return completo;
 	}
-	public void anularBillete(Integer vagon,Integer asiento) {
-		 vagones.get(vagon-1).getAsientos()[asiento]=0;
-		}
+
+	public void anularBillete(Integer vagon, Integer asiento) {
+		vagones.get(vagon - 1).getAsientos()[asiento] = 0;
+	}
+
 	public ArrayList<Vagon> getVagones() {
 		return this.vagones;
 	}
@@ -103,6 +112,6 @@ public class Tren implements Comparable<Tren>,Serializable{
 	@Override
 	public int compareTo(Tren tren) {
 		// TODO Auto-generated method stub
-		return this.numero-tren.getNumero();
+		return this.numero - tren.getNumero();
 	}
 }
