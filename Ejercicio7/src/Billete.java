@@ -6,7 +6,7 @@ import java.io.Serializable;
 o	número de billete: datos de billetes (de billetes)
 o	fecha, tren, vagón y asiento: (este puede salir del mapa con clave la fecha y valor que puede ser el billete).
 o	tren, fecha, vagón : asientos vendidos (de billetes)*/
-public class Billete implements Serializable,Separable{
+public class Billete implements Serializable{
 	/**
 	 * 
 	 */
@@ -33,6 +33,26 @@ public class Billete implements Serializable,Separable{
 	public void setVagon(Integer vagon) {
 		this.vagon = vagon;
 	}
+
+	
+
+	public Integer getNumBillete() {
+		return numBillete;
+	}
+
+	public void setNumBillete(Integer numBillete) {
+		this.numBillete = numBillete;
+	}
+
+	public static Integer getSiguiente() {
+		return siguiente;
+	}
+
+	public static void setSiguiente(Integer siguiente) {
+		Billete.siguiente = siguiente;
+	}
+
+	
 
 	public Tren getTren() {
 		return tren;

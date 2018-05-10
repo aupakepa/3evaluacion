@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author yo
  *
  */
-public class Fecha implements Comparable<Fecha>,Serializable,Separable{
+public class Fecha implements Comparable<Fecha>,Serializable{
 	/**
 	 * 
 	 */

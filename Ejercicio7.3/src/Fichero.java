@@ -71,7 +71,5 @@ public class Fichero {
 			System.exit(1);
 		}
 	}
-	public boolean exist() {
-		salida.equals(obj)
-	}
+	
 }
