@@ -22,11 +22,40 @@ public class GestionaLista {
 			valor=Leer.pedirEntero("Siguiente número (-1 para finalizar)");
 		}
 		imprimeLista(lista);
-
+		
 	}
 
+	private static void imprimeLista(Nodo lista) {
+		Nodo nodo;
+		Integer cont=1;
 
+		if(lista==null){
+			Leer.mostrarEnPantalla("Lista vacía");
+		}else {
+			nodo=lista;
+			while(nodo.getNodosig()!=null){
+				Leer.mostrarEnPantalla("Nodo "+cont+": "+nodo.toString());
+				cont++;
+				nodo=nodo.getNodosig();
+			}
+			Leer.mostrarEnPantalla("Nodo "+cont+": "+nodo.toString());
+			
+		}
+	}
 
-
+	private static Nodo creaNodo(Nodo lista, Integer valor) {
+		Nodo nodo, aux;
+		nodo=new Nodo(valor);
+		if(lista==null){
+			lista=nodo;
+		} else{
+			aux=lista;
+			while(aux.getNodosig()!=null){
+				aux=aux.getNodosig();
+			}
+			aux.setNodosig(nodo);
+		}
+		return lista;
+	}
 
 }
